@@ -1,5 +1,6 @@
 package com.mobiledocker.mobiledocker.entity;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+
 
 @Entity
 @Table(name="book_user")
@@ -21,6 +26,9 @@ public class BookUser implements java.io.Serializable {
 	private String reason;
 	private String zipcode;
 	private String cityname;
+	private String currentstatus;
+	@NotBlank(message="Name can not be empty ..")
+	@Size(min=3 ,max=10,message="Name must be between 3-10 characters")
 	private String fname;
 	@Column(name = "isDeleted")
     private boolean isDeleted = false;
@@ -47,7 +55,7 @@ public class BookUser implements java.io.Serializable {
 
 
 	public BookUser(String mobilenumber, String selectbrands, String selectmodel, String descrip, String reason,
-			String zipcode, String cityname, String fname) {
+			String zipcode, String cityname, String fname,String currentstatus) {
 		super();
 		this.mobilenumber = mobilenumber;
 		this.selectbrands = selectbrands;
@@ -57,9 +65,10 @@ public class BookUser implements java.io.Serializable {
 		this.zipcode = zipcode;
 		this.cityname = cityname;
 		this.fname = fname;
+		this.currentstatus=currentstatus;
 	}
 	public BookUser(String mobilenumber, String selectbrands, String selectmodel, String descrip, String reason,
-			String zipcode, String cityname, String fname, boolean isDeleted, String customerId) {
+			String zipcode, String cityname, String fname, boolean isDeleted, String customerId,String currentstatus) {
 		super();
 		this.mobilenumber = mobilenumber;
 		this.selectbrands = selectbrands;
@@ -71,6 +80,7 @@ public class BookUser implements java.io.Serializable {
 		this.fname = fname;
 		this.isDeleted = false;
 		this.customerId = generateCustomerId();
+		this.currentstatus=currentstatus;
 		
 	}
 
@@ -203,5 +213,21 @@ public class BookUser implements java.io.Serializable {
 	public void setDateDeleted(Date dateDeleted) {
 		this.dateDeleted = dateDeleted;
 	}
- 
+	
+	public String getCurrentstatus() {
+		return currentstatus;
+	}
+
+
+	public void setCurrentstatus(String currentstatus) {
+		this.currentstatus = currentstatus;
+	}
+
+		//comapartor
+		public static Comparator<BookUser> CustomerIdComapartar =new Comparator<BookUser>() {
+			
+			public int compare(BookUser e1,BookUser e2) {
+				return e1.getCustomerId().compareTo(e2.getCustomerId());
+			}
+		};
 }

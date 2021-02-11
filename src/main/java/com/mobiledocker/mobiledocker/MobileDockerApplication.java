@@ -17,7 +17,7 @@ import com.mobiledocker.mobiledocker.DaoImpl.CityDaoImpl;
 import com.mobiledocker.mobiledocker.DaoImpl.CountryDaoImpl;
 import com.mobiledocker.mobiledocker.DaoImpl.GenricRepositroyImpl;
 import com.mobiledocker.mobiledocker.serviceImpl.MobileWareHouseDaoServiceImpl;
-@EntityScan( basePackages = {"com.mobiledocker.mobiledocker.entity"})
+//@EntityScan( basePackages = {"com.mobiledocker.mobiledocker.entity"})
 @SpringBootApplication
 
 @ComponentScan(basePackages={"com.mobiledocker.mobiledocker.entity","com.mobiledocker.mobiledocker.controller","com.mobiledocker.mobiledocker.util"

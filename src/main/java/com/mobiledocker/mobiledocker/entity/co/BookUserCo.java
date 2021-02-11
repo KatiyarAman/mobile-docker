@@ -9,6 +9,7 @@ public class BookUserCo {
 	private String zipcode;
 	private String cityname;
 	private String fname;
+	private String currentstatus;
 	public String getMobilenumber() {
 		return mobilenumber;
 	}
@@ -56,6 +57,12 @@ public class BookUserCo {
 	}
 	public void setFname(String fname) {
 		this.fname = fname;
+	}
+	public String getCurrentstatus() {
+		return currentstatus;
+	}
+	public void setCurrentstatus(String currentstatus) {
+		this.currentstatus = currentstatus;
 	}
 	
 }

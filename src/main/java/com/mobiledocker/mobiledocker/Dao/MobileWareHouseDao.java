@@ -9,4 +9,7 @@ public interface MobileWareHouseDao {
 	public List<MobileWarehouse> FindByBrandsAndModelNumber(String brand,String modelseries);
 	//public List<Country> getAllCountryDetails(MobileWarehouse saBean);
 	public List<MobileWarehouse> findBybrandandModelSeries(String brand, String brandseries);
+	public List<MobileWarehouse> findByColumn(String warehouseId);
+	public MobileWarehouse get(String warehouseId);
+	public MobileWarehouse findByColumnn(String warehouseId);
 }

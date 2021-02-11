@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
-
+import com.mobiledocker.mobiledocker.entity.BookUser;
 import com.mobiledocker.mobiledocker.service.CityServiceDao;
 
 import com.mobiledocker.mobiledocker.service.CountryServiceDao;
@@ -32,7 +32,7 @@ public class DemoController {
 	@GetMapping(value="/")
 	public String index(ModelMap modelMap) {
 		log.info("DemoController countries");
-		
+		modelMap.addAttribute("formData",new BookUser());
 		modelMap.put("countries", countryServiceDao.findAll());
 		return "index";
 	}

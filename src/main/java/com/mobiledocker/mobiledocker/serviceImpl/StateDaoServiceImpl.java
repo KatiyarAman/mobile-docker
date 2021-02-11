@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mobiledocker.mobiledocker.Dao.CountryDao;
-import com.mobiledocker.mobiledocker.Dao.StateDao;
+
 import com.mobiledocker.mobiledocker.entity.co.StateCo;
 import com.mobiledocker.mobiledocker.entity.co.StateEntity;
 import com.mobiledocker.mobiledocker.entity.dto.StateDto;

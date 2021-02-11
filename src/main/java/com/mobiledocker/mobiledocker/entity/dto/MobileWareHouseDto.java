@@ -20,7 +20,7 @@ public class MobileWareHouseDto {
 	private String seriesName;
 	private int brand;
 	private int brandseries ;
-	
+	private String warehouseId;
 	public MobileWareHouseDto(MobileWarehouse wareHouse) {
 		this.touchandlcd = wareHouse.getTouchandlcd();
 		this.touchscreenglass = wareHouse.getTouchscreenglass();
@@ -39,7 +39,13 @@ public class MobileWareHouseDto {
 		this.seriesName = wareHouse.getSeriesName();
 		this.brand = wareHouse.getBrand();
 		this.brandseries = wareHouse.getBrandseries();
+		this.warehouseId=wareHouse.getWarehouseId();
 	}
+	
+	public MobileWareHouseDto() {
+		super();
+	}
+
 	public String getTouchandlcd() {
 		return touchandlcd;
 	}
@@ -141,5 +147,11 @@ public class MobileWareHouseDto {
 	}
 	public void setBrandseries(int brandseries) {
 		this.brandseries = brandseries;
+	}
+	public String getWarehouseId() {
+		return warehouseId;
+	}
+	public void setWarehouseId(String warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 }

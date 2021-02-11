@@ -42,7 +42,6 @@ public class StateDaoImpl extends GenricRepositroyImpl<State> implements StateDa
 			criteriaQuery.multiselect(rootEmp);
 			criteriaQuery.where(builder.equal(rootEmp.get("country"),countryId));
 			Query query = session.createQuery(criteriaQuery).setResultTransformer(Transformers.aliasToBean(State.class));
-			List<Object[]> resultList = query.getResultList();
 			states = query.getResultList();		
 				log.info("stateDaoImpl :"+states);
 		           } 
@@ -102,9 +101,9 @@ public class StateDaoImpl extends GenricRepositroyImpl<State> implements StateDa
 	}
 	@Override
 	public State findByColumn(int countryId) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		return super.findByColumnIsDeleted("id",countryId);
-	}
+	   }
 
 	}
 

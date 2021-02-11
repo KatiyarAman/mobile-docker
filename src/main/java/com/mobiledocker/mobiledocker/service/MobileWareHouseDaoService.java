@@ -32,7 +32,14 @@ public interface MobileWareHouseDaoService {
 
 			public List<MobileWareHouseDto> findBybrandandModelSeries(String brand, String brandseries);
 
-			public void Save( MobileWareHouseCo warehouseCo);
+			public MobileWareHouseDto Save( MobileWareHouseCo warehouseCo);
+
+			public List<MobileWareHouseDto> findAllWareHouse();
+
+			public List<MobileWareHouseDto> findByColumn(String warehouseId);
+			public MobileWareHouseDto findByColum(String warehouseId);
+
+			public MobileWareHouseDto updateProduct(MobileWareHouseCo warehouseCo ,String warehouseId);
 
 			
 	

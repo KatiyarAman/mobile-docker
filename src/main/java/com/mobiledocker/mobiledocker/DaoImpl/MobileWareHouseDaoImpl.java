@@ -68,6 +68,24 @@ return mobilewarehouse;
 	}
 
 
-	
+	@Override
+	public List<MobileWarehouse> findByColumn(String warehouseId) {
+		// TODO Auto-generated method stub
+		return super.findAllByColumn("warehouseId",warehouseId);
+	}
+
+
+	@Override
+	public MobileWarehouse get(String warehouseId) {
+		// TODO Auto-generated method stub
+		return super.findByColumn("warehouseId",warehouseId);
+	}
+
+
+	@Override
+	public MobileWarehouse findByColumnn(String warehouseId) {
+		// TODO Auto-generated method stub
+		return super.findByColumnIsDeleted("warehouseId", warehouseId);
+	}
 	
 }

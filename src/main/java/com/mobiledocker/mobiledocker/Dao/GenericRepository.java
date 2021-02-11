@@ -43,5 +43,5 @@ public interface GenericRepository<T> {
 
 	void update(Map<String, Object> object, int emp_Id);
 
-	public T get(int emp_Id);
+	public T get(String emp_Id);
 }

@@ -2,18 +2,15 @@ package com.mobiledocker.mobiledocker.DaoImpl;
 
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
+
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
 import org.springframework.stereotype.Repository;
 
 
@@ -86,7 +83,7 @@ public class CountryDaoImpl extends GenricRepositroyImpl<Country> implements Cou
 	@Override
 	public Country findByColumn(int brand) {
 		// TODO Auto-generated method stub
-		return super.findByColumn("id",brand);
+		return super.findByColumnIsDeleted("id",brand);
 	}}
 
 

@@ -199,6 +199,9 @@ $(document).ready(function(){
 	  }
 	  </script>
 
+ <!-- table java script-->
+  
+   <!-- tabe java script end  -->  
 </head>
 
 <body>
@@ -598,9 +601,9 @@ $(document).ready(function(){
                         <form role="form">
                           <div class="form-group">
                             <label for="exampleInputEmail1">Brands</label>
-                            <input type="text" style="width:150px" class="form-control" id="idBrand" name="idBrand" placeholder="Enter Brand">
+                            <input type="text" style="width:150px" class="form-control" id="idBrand"  placeholder="Enter Brand">
                           </div>                                              
-                          <button  onClick="addBrand()" class="btn btn-primary">Add</button>
+                          <button  onClick="addBrand();" class="btn btn-primary">Add</button>
                         </form>
                       </div>
                     </div>
@@ -622,7 +625,7 @@ $(document).ready(function(){
                           <div class="form-group">
                             <label for="inputEmail1" class="col-lg-2 control-label">Brand</label>
                             <div class="col-lg-10">
-                            <select id="comboboxCountryy" style="width:150px" class="form-control" aria-describedby="passwordHelpInline" name="comboboxCountry">
+                            <select id="comboboxCountryy" style="width:150px" class="form-control" aria-describedby="passwordHelpInline" >
 						<c:forEach var="country" items="${countries }">
 							<option value="${country.id }">${country.name }</option>
 						</c:forEach>
@@ -665,19 +668,19 @@ $(document).ready(function(){
                     <div class="col-lg-10">
                       <div class="row">
                         <div class="col-lg-3">
-                          <select id="comboboxCountry"  class="form-control" aria-describedby="passwordHelpInline" name="comboboxCountry">
+                          <select id="comboboxCountry"  class="form-control" aria-describedby="passwordHelpInline" >
 						     <c:forEach var="country" items="${countries }">
 							    <option value="${country.id }">${country.name }</option>
 						      </c:forEach>
 					          </select>
                         </div>
                         <div class="col-lg-3">
-                          <select id="comboboxState"  class="form-control"  name="comboboxState">
+                          <select id="comboboxState"  class="form-control"  >
 					            <option selected>Series</option>
 					          </select>
                         </div>                        
                         <div class="col-lg-3">
-                             <input type="text" name="touchandlcd" id="touchandlcd" class="form-control"placeholder="touchandlcd">                        
+                             <input type="text"  id="touchandlcd" class="form-control"placeholder="touchandlcd">                        
                         </div>                      
                       </div>
                       
@@ -687,14 +690,14 @@ $(document).ready(function(){
                     <div class="col-lg-10">
                       <div class="row">
                         <div class="col-lg-3">
-                          <input type="text" name="touchscreenglass" id="touchscreenglass"  class="form-control"placeholder="touchscreenglass">
+                          <input type="text" name="" id="touchscreenglass"  class="form-control"placeholder="touchscreenglass">
                         </div>
                         <div class="col-lg-3">
-                        <input type="text" name="standbyphone" id="standbyphone"  class="form-control"placeholder="standbyphone">
+                        <input type="text" name="" id="standbyphone"  class="form-control"placeholder="standbyphone">
 
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" name="battery" id="battery"  class="form-control"placeholder="battery">
+                            <input type="text" name="" id="battery"  class="form-control"placeholder="battery">
                         </div>
                       </div>
                       
@@ -704,13 +707,13 @@ $(document).ready(function(){
                     <div class="col-lg-10">
                       <div class="row">
                         <div class="col-lg-3">
-                          <input type="text" name="chargeport" id="chargeport"  class="form-control"placeholder="chargeport">
+                          <input type="text" name="" id="chargeport"  class="form-control"placeholder="chargeport">
                         </div>
                         <div class="col-lg-3">
-                          <input type="text" name="loudspeaker" id="loudspeaker" class="form-control"placeholder="loudspeaker">
+                          <input type="text" name="" id="loudspeaker" class="form-control"placeholder="loudspeaker">
                         </div>
                         <div class="col-lg-3">
-                          <input type="text" name="earspeaker" id="earspeaker"  class="form-control"placeholder="earspeaker">
+                          <input type="text" name="" id="earspeaker"  class="form-control"placeholder="earspeaker">
                         </div>
                       </div>
                       
@@ -720,13 +723,13 @@ $(document).ready(function(){
                     <div class="col-lg-10">
                       <div class="row">
                         <div class="col-lg-3">
-                       <input type="text" name="audiojack" id="audiojack"  class="form-control"placeholder="audiojack">
+                       <input type="text" name="" id="audiojack"  class="form-control"placeholder="audiojack">
                         </div>
                         <div class="col-lg-3">
-                          <input type="text" name="microphone" id="microphone"  class="form-control"placeholder="microphone">
+                          <input type="text" name="" id="microphone"  class="form-control"placeholder="microphone">
                         </div>
                         <div class="col-lg-3">
-                         <input type="text" name="network" id="network"  class="form-control"placeholder="network">
+                         <input type="text" name="" id="network"  class="form-control"placeholder="network">
                         </div>
                       </div>
                       
@@ -737,13 +740,13 @@ $(document).ready(function(){
                     <div class="col-lg-10">
                       <div class="row">
                         <div class="col-lg-3">
-                          <input type="text" name="softwarediagnosis" id="softwarediagnosis"  class="form-control"placeholder="softwarediagnosis">
+                          <input type="text" name="" id="softwarediagnosis"  class="form-control"placeholder="softwarediagnosis">
                         </div>
                         <div class="col-lg-3">
-                         <input type="text" name="deadphonediagnosis" id="deadphonediagnosis"  class="form-control"placeholder="deadphonediagnosis">
+                         <input type="text" name="" id="deadphonediagnosis"  class="form-control"placeholder="deadphonediagnosis">
                         </div>
                         <div class="col-lg-3">
-                          <input type="text" name="waterdiagnosis" id="waterdiagnosis" class="form-control"placeholder="waterdiagnosis">
+                          <input type="text" name="" id="waterdiagnosis" class="form-control"placeholder="waterdiagnosis">
                         </div>
                       </div>
                       
@@ -772,9 +775,10 @@ $(document).ready(function(){
           </div>
        
         
-
+  <!-- table start here -->
     
-            
+    
+   <!-- table end here -->         
         <!-- page end-->
       </section>
     </section>
@@ -783,7 +787,7 @@ $(document).ready(function(){
   <!-- container section end -->
   
    
-  
+             
   
   
   <!-- javascripts -->
@@ -821,6 +825,9 @@ $(document).ready(function(){
   <script src="js/scripts.js"></script>
  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
 
+
+
+             
 </body>
 
 </html>

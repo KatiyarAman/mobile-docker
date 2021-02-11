@@ -27,6 +27,7 @@ import com.mobiledocker.mobiledocker.entity.dto.MobileWareHouseDto;
 import com.mobiledocker.mobiledocker.repository.Mobilewarehouse;
 import com.mobiledocker.mobiledocker.service.MobileWareHouseDaoService;
 import com.mobiledocker.mobiledocker.util.ObjectBinder;
+import com.mobiledocker.mobiledocker.util.exception.CustomerNotFoundException;
 import com.mobiledocker.mobiledocker.util.exception.DiscoveryException;
 @Service
 @Transactional
@@ -140,7 +141,7 @@ public class MobileWareHouseDaoServiceImpl implements MobileWareHouseDaoService 
 	}
 	
 	@Override
-	public void Save( MobileWareHouseCo warehouseCo) {
+	public MobileWareHouseDto Save( MobileWareHouseCo warehouseCo) {
 		System.out.println("get the name "+warehouseCo.getBrandseries());
 		// TODO Auto-generated method stub
 		mobilewareobj.setAudiojack(warehouseCo.getAudiojack());
@@ -160,7 +161,54 @@ public class MobileWareHouseDaoServiceImpl implements MobileWareHouseDaoService 
 		mobilewareobj.setWaterdiagnosis(warehouseCo.getWaterdiagnosis());
 		mobilewareobj.setBrandName(warehouseCo.getBrandName());
 		mobilewareobj.setSeriesName(warehouseCo.getSeriesName());
-		mobilewarehouseDao.save(mobilewareobj);
+		MobileWarehouse warehousate=mobilewarehouseDao.save(mobilewareobj);
+		return objectBinder.bindWareHouse(warehousate);
+	}
+
+	@Override
+	public List<MobileWareHouseDto> findAllWareHouse() {
+		// TODO Auto-generated method stub
+		return objectBinder.bindWareHouses(mobilewarehouseDao.findAll());
+	}
+
+	@Override
+	public List<MobileWareHouseDto> findByColumn(String warehouseId) {
+		// TODO Auto-generated method stub
+		return objectBinder.bindWareHouses(mobilewarehouseDao.findByColumn(warehouseId));
+	}
+
+	@Override
+	public MobileWareHouseDto updateProduct(MobileWareHouseCo warehouseCo,String warehouseId) {
+		// TODO Auto-generated method stub
+		MobileWarehouse warehouse=mobilewarehouseDao.get(warehouseId);
+		if(warehouse ==null)
+			throw new CustomerNotFoundException("Entity not found by this warehouseId " + warehouseId);
+		mobilewareobj.setId(warehouse.getId());
+		mobilewareobj.setAudiojack(warehouseCo.getAudiojack());
+		mobilewareobj.setBattery(warehouseCo.getBattery());
+		mobilewareobj.setBrand(warehouseCo.getBrand());
+		mobilewareobj.setBrandseries(warehouseCo.getBrandseries());
+		mobilewareobj.setChargeport(warehouseCo.getChargeport());
+		mobilewareobj.setDeadphonediagnosis(warehouseCo.getDeadphonediagnosis());
+		mobilewareobj.setEarspeaker(warehouseCo.getEarspeaker());
+		mobilewareobj.setLoudspeaker(warehouseCo.getLoudspeaker());
+		mobilewareobj.setMicrophone(warehouseCo.getMicrophone());
+		mobilewareobj.setNetwork(warehouseCo.getNetwork());
+		mobilewareobj.setSoftwarediagnosis(warehouseCo.getSoftwarediagnosis());
+		mobilewareobj.setStandbyphone(warehouseCo.getStandbyphone());
+		mobilewareobj.setTouchandlcd(warehouseCo.getTouchandlcd());
+		mobilewareobj.setTouchscreenglass(warehouseCo.getTouchscreenglass());
+		mobilewareobj.setWaterdiagnosis(warehouseCo.getWaterdiagnosis());
+		mobilewareobj.setBrandName(warehouseCo.getBrandName());
+		mobilewareobj.setSeriesName(warehouseCo.getSeriesName());
+		MobileWarehouse warehouseupdate=mobilewarehouseDao.save(mobilewareobj);
+		return objectBinder.bindWareHouse(warehouseupdate);
+	}
+
+	@Override
+	public MobileWareHouseDto findByColum(String warehouseId) {
+		// TODO Auto-generated method stub
+		return objectBinder.bindWareHouse(mobilewarehouseDao.findByColumnn(warehouseId));
 	}
 	
 	

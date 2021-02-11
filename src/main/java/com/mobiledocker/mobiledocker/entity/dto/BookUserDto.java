@@ -1,5 +1,7 @@
 package com.mobiledocker.mobiledocker.entity.dto;
 
+import java.util.Date;
+
 import com.mobiledocker.mobiledocker.entity.BookUser;
 
 public class BookUserDto {
@@ -11,8 +13,9 @@ public class BookUserDto {
 	private String zipcode;
 	private String cityname;
 	private String fname;
-	
-	
+	private Date dateCreated;
+	private String currentstatus;
+	private String customerId;
 	public BookUserDto(BookUser bookUser) {
 		this.mobilenumber = bookUser.getMobilenumber();
 		this.selectbrands = bookUser.getSelectbrands();
@@ -22,7 +25,17 @@ public class BookUserDto {
 		this.zipcode = bookUser.getZipcode();
 		this.cityname = bookUser.getCityname();
 		this.fname = bookUser.getFname();
+		this.dateCreated=bookUser.getDateCreated();
+		this.currentstatus=bookUser.getCurrentstatus();
+		this.customerId=bookUser.getCustomerId();
 	}
+	
+	
+	public BookUserDto() {
+		super();
+	}
+
+
 	public String getMobilenumber() {
 		return mobilenumber;
 	}
@@ -70,6 +83,24 @@ public class BookUserDto {
 	}
 	public void setFname(String fname) {
 		this.fname = fname;
+	}
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	public String getCurrentstatus() {
+		return currentstatus;
+	}
+	public void setCurrentstatus(String currentstatus) {
+		this.currentstatus = currentstatus;
+	}
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	
 }

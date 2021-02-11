@@ -55,8 +55,8 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
     }
 
     @Override
-    public T get(int emp_Id) {
-        log.info("Generic Query for getting entity by id '{}'", emp_Id);
+    public T get(String emp_Id) {
+        log.info("Get Generic Query for getting entity by id '{}'", emp_Id);
         return get("emp_Id", emp_Id);
     }
 
@@ -200,12 +200,12 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(entityType);
         Root<T> root = criteria.from(entityType);
-        criteria.select(root).where(builder.isFalse(root.get("isDeleted")));
+        criteria.select(root).where(builder.isFalse(root.get("is_deleted")));
         return session.createQuery(criteria);
     }
 
     private T get(String column, Object value) {
-        log.info("Generic Query for column {} and value {}", column, value);
+        log.info("Get Generic Query for column {} and value {}", column, value);
         try (Session session = getCurrentSession()) {
             return session.createQuery(getCriteriaQuery(session, column, value)).getSingleResult();
         } catch (Exception ex) {
@@ -246,7 +246,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         Root<T> entityRoot = criteriaQuery.from(entityType);
 
         criteriaQuery.select(entityRoot).where(
-                builder.and(builder.equal(entityRoot.get(column), value), builder.equal(entityRoot.get("deleted"), false)));
+                builder.and(builder.equal(entityRoot.get(column), value), builder.equal(entityRoot.get("isDeleted"), false)));
 
         log.info("search criteria query is created successfully");
         return criteriaQuery;
@@ -285,7 +285,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
 
 	 private T get(String column, Object value,String col, Object val) {
 	        log.info("Generic Query for column {} and value {}", column, value);
-	        log.info("FindByColumnAndId :");
+	        log.info("FindByColumnAndId Generric author aman:");
 	        try (Session session = getCurrentSession()) {
 	            return session.createQuery(getCriteriaQuery(session, column, value,col,val)).setMaxResults(1).uniqueResult();
 	        } catch (Exception ex) {
