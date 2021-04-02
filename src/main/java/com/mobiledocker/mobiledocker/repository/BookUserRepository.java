@@ -9,8 +9,5 @@ import com.mobiledocker.mobiledocker.entity.BookUser;
 
 public interface BookUserRepository extends JpaRepository<BookUser,Integer>,BookUserDao{
 
-	
-
-	
-
+	public List<BookUser> findByMobilenumberContaining(String keywords);
 }

@@ -39,7 +39,7 @@ public interface GenericRepository<T> {
 
 	public T save(T object);
 
-	public void setDeleted(int emp_Id);
+	public void setDeleted(int id);
 
 	void update(Map<String, Object> object, int emp_Id);
 

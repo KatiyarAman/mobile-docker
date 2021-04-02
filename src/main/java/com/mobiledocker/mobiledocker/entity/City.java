@@ -1,64 +1,57 @@
 package com.mobiledocker.mobiledocker.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "city")
 public class City implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
-	private Integer id;
-	private State state;
-	private String name;
+    private static final long serialVersionUID = 1L;
 
-	public City() {
-	}
+    private Integer id;
 
-	public City(State state, String name) {
-		this.state = state;
-		this.name = name;
-	}
+    private State state;
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    private String name;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public City() {
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "stateId", nullable = false)
-	public State getState() {
-		return this.state;
-	}
+    public City(State state, String name) {
+        this.state = state;
+        this.name = name;
+    }
 
-	public void setState(State state) {
-		this.state = state;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+        return this.id;
+    }
 
-	@Column(name = "name", nullable = false, length = 250)
-	public String getName() {
-		return this.name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stateId", nullable = false)
+    public State getState() {
+        return this.state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    @Column(name = "name", nullable = false, length = 250)
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }
 

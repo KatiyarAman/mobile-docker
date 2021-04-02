@@ -5,11 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import java.io.File;
 import com.mobiledocker.mobiledocker.Dao.GenericRepository;
 import com.mobiledocker.mobiledocker.DaoImpl.BookUserDaoImpl;
@@ -19,7 +22,6 @@ import com.mobiledocker.mobiledocker.DaoImpl.GenricRepositroyImpl;
 import com.mobiledocker.mobiledocker.serviceImpl.MobileWareHouseDaoServiceImpl;
 //@EntityScan( basePackages = {"com.mobiledocker.mobiledocker.entity"})
 @SpringBootApplication
-
 @ComponentScan(basePackages={"com.mobiledocker.mobiledocker.entity","com.mobiledocker.mobiledocker.controller","com.mobiledocker.mobiledocker.util"
 		,"com.mobiledocker.mobiledocker.repository","com.mobiledocker.mobiledocker.service","com.mobiledocker.mobiledocker.serviceImpl",
 		"com.mobiledocker.mobiledocker.DaoImpl","com.mobiledocker.mobiledocker.Dao","com.mobiledocker.mobiledocker"})
@@ -35,4 +37,5 @@ public class MobileDockerApplication {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+	
 }

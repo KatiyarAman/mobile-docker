@@ -1,4 +1,4 @@
-var Script = function() {
+/*var Script = function() {
 
   //checkbox and radio btn
 
@@ -199,3 +199,4 @@ var Script = function() {
 
 
 }();
+*/

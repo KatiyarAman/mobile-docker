@@ -6,26 +6,22 @@ import java.util.Set;
 import com.mobiledocker.mobiledocker.entity.State;
 
 public class CountryCo {
-	private Integer id;
-	private String name;
-	private Set<State> states = new HashSet<State>(0);
-	public Integer getId() {
-		return id;
+	private String  brandId;
+	private String brandname;
+	
+	public String getBrandId() {
+		return brandId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
 	}
-	public String getName() {
-		return name;
+	
+	public String getBrandname() {
+		return brandname;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setBrandname(String brandname) {
+		this.brandname = brandname;
 	}
-	public Set<State> getStates() {
-		return states;
-	}
-	public void setStates(Set<State> states) {
-		this.states = states;
-	}
+	
 	
 }

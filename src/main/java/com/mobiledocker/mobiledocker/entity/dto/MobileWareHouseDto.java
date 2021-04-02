@@ -1,5 +1,8 @@
 package com.mobiledocker.mobiledocker.entity.dto;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mobiledocker.mobiledocker.entity.MobileWarehouse;
 
 public class MobileWareHouseDto {
@@ -18,9 +21,11 @@ public class MobileWareHouseDto {
 	private String standbyphone;
 	private String brandName;
 	private String seriesName;
-	private int brand;
-	private int brandseries ;
+	private String brand;
+	private String brandseries ;
 	private String warehouseId;
+	@JsonProperty("registrationDate")
+    private Date dateCreated;
 	public MobileWareHouseDto(MobileWarehouse wareHouse) {
 		this.touchandlcd = wareHouse.getTouchandlcd();
 		this.touchscreenglass = wareHouse.getTouchscreenglass();
@@ -136,22 +141,35 @@ public class MobileWareHouseDto {
 	public void setSeriesName(String seriesName) {
 		this.seriesName = seriesName;
 	}
-	public int getBrand() {
-		return brand;
-	}
-	public void setBrand(int brand) {
-		this.brand = brand;
-	}
-	public int getBrandseries() {
-		return brandseries;
-	}
-	public void setBrandseries(int brandseries) {
-		this.brandseries = brandseries;
-	}
+	
 	public String getWarehouseId() {
 		return warehouseId;
 	}
 	public void setWarehouseId(String warehouseId) {
 		this.warehouseId = warehouseId;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getBrandseries() {
+		return brandseries;
+	}
+
+	public void setBrandseries(String brandseries) {
+		this.brandseries = brandseries;
 	}
 }

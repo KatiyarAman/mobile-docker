@@ -9,10 +9,12 @@ import com.mobiledocker.mobiledocker.entity.BookUser;
 import com.mobiledocker.mobiledocker.entity.Country;
 import com.mobiledocker.mobiledocker.entity.MobileWarehouse;
 import com.mobiledocker.mobiledocker.entity.State;
+import com.mobiledocker.mobiledocker.entity.User;
 import com.mobiledocker.mobiledocker.entity.dto.BookUserDto;
 import com.mobiledocker.mobiledocker.entity.dto.CountryDto;
 import com.mobiledocker.mobiledocker.entity.dto.MobileWareHouseDto;
 import com.mobiledocker.mobiledocker.entity.dto.StateDto;
+import com.mobiledocker.mobiledocker.entity.dto.UserDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,16 @@ public class ObjectBinder {
 		      CountryDto empDto=modelMapper.map(employee,CountryDto.class);			  
 			  return empDto;
 	  }
+    public List<CountryDto> bindCountries(List<Country> brands)
+    {
+    	if(brands==null)
+    		return new ArrayList<>();
+    	List<CountryDto> countryDtoList=new ArrayList<CountryDto>();
+    	brands.forEach(ed->{if(ed!=null)
+    	 countryDtoList.add(new CountryDto(ed));	
+    	});
+    	return countryDtoList;
+    }
     public StateDto bindState(State state) {
     	if(state == null)
     		return null;
@@ -82,4 +94,26 @@ public class ObjectBinder {
     	});
     	return wareHousesDto;
     }
+   public UserDto bindUser(User user) {
+    	if(user==null)
+    		return null;
+    	return modelMapper.map(user, UserDto.class);
+    }
+   public List<UserDto> bindUsers(List<User> users){
+	   if(users==null)
+		   return new ArrayList<>();
+	   List<UserDto> userDtos=new ArrayList<>();
+	   users.forEach(user->{
+		   userDtos.add(bindUser(user));
+	   });
+	   return userDtos;
+   }
+	/*
+	 * public StateJoinDto bindStatejoin(State state) { if (state==null) return
+	 * null; StateJoinDto joindto=modelMapper.map(state,StateJoinDto.class); return
+	 * joindto; } public List<StateJoinDto> bindstatejoin(List<State> states){
+	 * if(states==null) return new ArrayList<>(); List<StateJoinDto> listjoin=new
+	 * ArrayList<StateJoinDto>(); states.forEach(ed->{if(ed!=null) listjoin.add(new
+	 * StateJoinDto(ed)); }); return listjoin; }
+	 */
 }

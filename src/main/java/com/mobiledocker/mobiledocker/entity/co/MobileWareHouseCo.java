@@ -16,8 +16,8 @@ public class MobileWareHouseCo {
 	private String standbyphone;
 	private String brandName;
 	private String seriesName;
-	private int brand;
-	private int brandseries ;
+	private String brand;
+	private String brandseries ;
 	public String getTouchandlcd() {
 		return touchandlcd;
 	}
@@ -108,18 +108,19 @@ public class MobileWareHouseCo {
 	public void setSeriesName(String seriesName) {
 		this.seriesName = seriesName;
 	}
-	public int getBrand() {
+	public String getBrand() {
 		return brand;
 	}
-	public void setBrand(int brand) {
+	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public int getBrandseries() {
+	public String getBrandseries() {
 		return brandseries;
 	}
-	public void setBrandseries(int brandseries) {
+	public void setBrandseries(String brandseries) {
 		this.brandseries = brandseries;
 	}
+	
 	
 	
 }

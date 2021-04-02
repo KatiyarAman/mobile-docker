@@ -5905,3 +5905,24 @@ td.visible-print {
     display: none !important;
   }
 }
+/* search  */
+.search-container{
+	position: relative;
+}
+.search-result{
+	position: absolute;
+	background: white;
+	width: 100%;
+	padding:10px;
+	/* border: 2px solid gray; */
+	display: none;
+}
+.search-result-series{
+	position: absolute;
+	background: white;
+	width: 100%;
+	
+	padding:10px;
+	/* border: 1px solid gray; */
+	display: none;
+}

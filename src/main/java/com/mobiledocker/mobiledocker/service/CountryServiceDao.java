@@ -8,7 +8,13 @@ import com.mobiledocker.mobiledocker.entity.dto.CountryDto;
 
 public interface CountryServiceDao {
  public List<Country> findAll();
- public Country findById(int id);
- public CountryDto save(CountryCo cee);
-public CountryDto findByColum(int brand);
+ public List<CountryDto> findGenricAll();
+ public CountryDto findByColumn(String brandId);
+
+ public CountryDto Save(CountryCo cee);
+ public CountryDto findByColum(int brand);
+ public CountryDto updateBrand(CountryCo countryCo, String brandId);
+ public void updateFlag(int brandId);
+ public List<CountryDto> SearchKeyword(String query);
+ 
 }

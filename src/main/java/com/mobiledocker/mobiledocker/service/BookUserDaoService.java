@@ -13,4 +13,6 @@ public void BookUser(BookUser bookUser);
 public BookUserDto findByColum(String customerId);
 
 public BookUserDto updateStatus(BookUserCo bookUserCo, String customerId);
+
+public List<BookUserDto> SearchKeyword(String keywords);
 }

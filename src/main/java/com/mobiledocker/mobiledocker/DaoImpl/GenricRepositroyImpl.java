@@ -1,20 +1,15 @@
 package com.mobiledocker.mobiledocker.DaoImpl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
-
+import com.google.gson.Gson;
+import com.mobiledocker.mobiledocker.Dao.GenericRepository;
+import com.mobiledocker.mobiledocker.util.exception.EntityUpdateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -24,13 +19,9 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.util.*;
 
-import com.google.gson.Gson;
-import com.mobiledocker.mobiledocker.Dao.GenericRepository;
-import com.mobiledocker.mobiledocker.util.exception.EntityUpdateException;
-
 public class GenricRepositroyImpl<T> implements GenericRepository<T> {
 
-	private final static Logger log = LoggerFactory.getLogger(GenricRepositroyImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(GenricRepositroyImpl.class);
 
     private Class<T> entityType;
 
@@ -40,10 +31,9 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
     private Map<String, Object> getDeleteQuery() {
         log.info("creating generic delete query");
         Map<String, Object> query = new HashMap<>();
-        query.put("isDeleted", true);
+        query.put("deleted", true);
         return query;
     }
-
 
     protected final Session getCurrentSession() {
         return entityManagerFactory.unwrap(SessionFactory.class).withOptions().jdbcTimeZone(TimeZone.getTimeZone("UTC")).openSession();
@@ -66,13 +56,11 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         return getAll(column, value);
     }
 
-
-
     private Long countQuery(Session session, String column, Object value) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
         Root<T> root = criteria.from(entityType);
-        criteria.select(builder.count(root)).where(builder.and(builder.isFalse(root.get("isDeleted")), builder.equal(root.get(column), value)));
+        criteria.select(builder.count(root)).where(builder.and(builder.isFalse(root.get("deleted")), builder.equal(root.get(column), value)));
         return session.createQuery(criteria).getSingleResult();
     }
 
@@ -85,7 +73,6 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
     @Override
     public T save(T object) {
         log.info("Generic Query for persisting an entity for '{}'", object);
-
         T entity = null;
         Transaction transaction = null;
         try (Session session = getCurrentSession()) {
@@ -103,15 +90,15 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
     }
 
     @Override
-    public void setDeleted(int emp_Id) {
-        log.info("Entity is going to set as deleted {}", emp_Id);
+    public void setDeleted(int id) {
+        log.info("Entity is going to set as deleted {}", id);
 
         Transaction transaction = null;
         try (Session session = getCurrentSession()) {
             transaction = session.beginTransaction();
-            session.createQuery(getUpdateCriteriaQuery(session, getDeleteQuery(), emp_Id));
+            session.createQuery(getUpdateCriteriaQuery(session, getDeleteQuery(), id)).executeUpdate();
             transaction.commit();
-            log.info("Entity has been marked as deleted {}", emp_Id);
+            log.info("Entity has been marked as deleted {}", id);
         } catch (Exception ex) {
             log.error("Entity can not be set as deleted due to exception");
             rollBackTransaction(transaction);
@@ -154,7 +141,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
     }
 
     //Descending sorting
-    
+
 
     @Override
     public List<T> list(int offset, int limit) {
@@ -175,7 +162,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(entityType);
         Root<T> root = criteria.from(entityType);
-        criteria.select(root).where(builder.and(builder.isFalse(root.get("isDeleted")), builder.equal(root.get(column), value)));
+        criteria.select(root).where(builder.and(builder.isFalse(root.get("deleted")), builder.equal(root.get(column), value)));
         return session.createQuery(criteria).setFirstResult(offset).setMaxResults(limit).getResultList();
     }
 
@@ -187,7 +174,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
             Root<T> root = criteria.from(entityType);
-            criteria.select(builder.count(root.get("emp_Id"))).where(builder.isFalse(root.get("isDeleted")));
+            criteria.select(builder.count(root.get("emp_Id"))).where(builder.isFalse(root.get("deleted")));
             count = session.createQuery(criteria).getSingleResult().intValue();
         } catch (Exception ex) {
             log.error("Error occurred while counting the records of this entity.");
@@ -200,7 +187,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteria = builder.createQuery(entityType);
         Root<T> root = criteria.from(entityType);
-        criteria.select(root).where(builder.isFalse(root.get("is_deleted")));
+        criteria.select(root).where(builder.isFalse(root.get("deleted")));
         return session.createQuery(criteria);
     }
 
@@ -213,7 +200,7 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
             log.error("Generic Query can not be completed for {} column due to this exception", column);
             return null;
         }
-         
+
     }
 
     private List<T> getAll(String column, Object value) {
@@ -226,7 +213,8 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
             return null;
         }
     }
-       // get all
+
+    // get all
     protected CriteriaQuery<T> getallCriteriaQuery(Session session, String column, Object value) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
@@ -238,31 +226,28 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         log.info("search criteria query is created successfully");
         return criteriaQuery;
     }
-    
-    
+
+
     protected CriteriaQuery<T> getCriteriaQuery(Session session, String column, Object value) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
         Root<T> entityRoot = criteriaQuery.from(entityType);
 
         criteriaQuery.select(entityRoot).where(
-                builder.and(builder.equal(entityRoot.get(column), value), builder.equal(entityRoot.get("isDeleted"), false)));
+                builder.and(builder.equal(entityRoot.get(column), value), builder.equal(entityRoot.get("deleted"), false)));
 
         log.info("search criteria query is created successfully");
         return criteriaQuery;
     }
 
-    private CriteriaUpdate<T> getUpdateCriteriaQuery(Session session, Map<String, Object> objectMap, int emp_Id) {
+    private CriteriaUpdate<T> getUpdateCriteriaQuery(Session session, Map<String, Object> objectMap, int id) {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaUpdate<T> criteriaUpdate = builder.createCriteriaUpdate(entityType);
         Root<T> entityRoot = criteriaUpdate.from(entityType);
-
         for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
             criteriaUpdate.set(entry.getKey(), entry.getValue());
         }
-
-        criteriaUpdate.where(builder.equal(entityRoot.get("emp_Id"), emp_Id));
-
+        criteriaUpdate.where(builder.equal(entityRoot.get("id"), id));
         log.info("update criteria query is created successfully with id where clause");
         return criteriaUpdate;
     }
@@ -274,76 +259,79 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
         log.info("transaction is rolled back successfully.");
     }
 
-   //author aman-298
-	@Override
-	public T findByColumnAndId(String column, Object value, String col, Object val) {
-		// TODO Auto-generated method stub
-		log.info("Generic Query for getting an entity by column '{}' and value '{}' and col '{}' and val '{}' ", column, value,col,val);
-		
-		return get(column,value,col,val);
-	}
+    //author aman-298
+    @Override
+    public T findByColumnAndId(String column, Object value, String col, Object val) {
+        // TODO Auto-generated method stub
+        log.info("Generic Query for getting an entity by column '{}' and value '{}' and col '{}' and val '{}' ", column, value, col, val);
 
-	 private T get(String column, Object value,String col, Object val) {
-	        log.info("Generic Query for column {} and value {}", column, value);
-	        log.info("FindByColumnAndId Generric author aman:");
-	        try (Session session = getCurrentSession()) {
-	            return session.createQuery(getCriteriaQuery(session, column, value,col,val)).setMaxResults(1).uniqueResult();
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	            log.error("Generic Query can not be completed for {} column due to this exception", column);
-	            return null;
-	        }
-	 }
-	 protected CriteriaQuery<T> getCriteriaQuery(Session session, String column, Object value,String col, Object val) {
-	        CriteriaBuilder builder = session.getCriteriaBuilder();
-	        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
-	        Root<T> entityRoot = criteriaQuery.from(entityType);
+        return get(column, value, col, val);
+    }
 
-	        criteriaQuery.select(entityRoot).where(
-	                builder.and(builder.equal(entityRoot.get(column), value),builder.equal(entityRoot.get(col), val)));
+    private T get(String column, Object value, String col, Object val) {
+        log.info("Generic Query for column {} and value {}", column, value);
+        log.info("FindByColumnAndId Generric author aman:");
+        try (Session session = getCurrentSession()) {
+            return session.createQuery(getCriteriaQuery(session, column, value, col, val)).setMaxResults(1).uniqueResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            log.error("Generic Query can not be completed for {} column due to this exception", column);
+            return null;
+        }
+    }
 
-	        log.info("search criteria query is created successfully FindByColumnAndId :");
-	        return criteriaQuery;
-	    }
-	 //author aman
+    protected CriteriaQuery<T> getCriteriaQuery(Session session, String column, Object value, String col, Object val) {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
+        Root<T> entityRoot = criteriaQuery.from(entityType);
+
+        criteriaQuery.select(entityRoot).where(
+                builder.and(builder.equal(entityRoot.get(column), value), builder.equal(entityRoot.get(col), val),builder.isFalse(entityRoot.get("deleted"))));
+
+        log.info("search criteria query is created successfully FindByColumnAndId :");
+        return criteriaQuery;
+    }
+    //author aman
 
 
-	@Override
-	public List<T> findByColuAndId(String column, Object value, String col, Object val) {
-		// TODO Auto-generated method stub
-		log.info("Generic Query for getting an entityList by column '{}' and value '{}' and col '{}' and val '{}' ", column, value,col,val);
+    @Override
+    public List<T> findByColuAndId(String column, Object value, String col, Object val) {
+        // TODO Auto-generated method stub
+        log.info("Generic Query for getting an entityList by column '{}' and value '{}' and col '{}' and val '{}' ", column, value, col, val);
 
-		return getAll(column, value,col,val);
-	}
-	private List<T> getAll(String column, Object value,String col, Object val) {
+        return getAll(column, value, col, val);
+    }
+
+    private List<T> getAll(String column, Object value, String col, Object val) {
         log.info("Generic Query for column {} and value {}", column, value);
         try (Session session = getCurrentSession()) {
-            return session.createQuery(gettCriteriaQuery(session, column, value,col,val)).getResultList();
+            return session.createQuery(gettCriteriaQuery(session, column, value, col, val)).getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
             log.error("Generic Query can not be completed for list output of {} column due to this exception", column);
             return null;
         }
-	}
-	
-	 protected CriteriaQuery<T> gettCriteriaQuery(Session session, String column, Object value,String col, Object val) {
-	        CriteriaBuilder builder = session.getCriteriaBuilder();
-	        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
-	        Root<T> entityRoot = criteriaQuery.from(entityType);
+    }
 
-	        criteriaQuery.select(entityRoot).where(
-	        		builder.and(builder.equal(entityRoot.get(column), value),builder.equal(entityRoot.get(col), val)));
-	        log.info("search criteria query is created successfully");
-	        return criteriaQuery;
-	    }
+    protected CriteriaQuery<T> gettCriteriaQuery(Session session, String column, Object value, String col, Object val) {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
+        Root<T> entityRoot = criteriaQuery.from(entityType);
 
-// author aman
-	@Override
-	public T findByColumnIsDeleted(String column, Object value) {
-		// TODO Auto-generated method stub
-		return getIsDeleted(column,value);
-	}
-	private T getIsDeleted(String column, Object value) {
+        criteriaQuery.select(entityRoot).where(
+                builder.and(builder.equal(entityRoot.get(column), value), builder.equal(entityRoot.get(col), val)));
+        log.info("search criteria query is created successfully");
+        return criteriaQuery;
+    }
+
+    // author aman
+    @Override
+    public T findByColumnIsDeleted(String column, Object value) {
+        // TODO Auto-generated method stub
+        return getIsDeleted(column, value);
+    }
+
+    private T getIsDeleted(String column, Object value) {
         log.info("Generic Query IsDeleted for column {} and value {}", column, value);
         try (Session session = getCurrentSession()) {
             return session.createQuery(getIsDeletedCriteriaQuery(session, column, value)).getSingleResult();
@@ -352,16 +340,18 @@ public class GenricRepositroyImpl<T> implements GenericRepository<T> {
             log.error("Generic Query IsDeleted can not be completed for {} column due to this exception", column);
             return null;
         }
-	}
-        protected CriteriaQuery<T> getIsDeletedCriteriaQuery(Session session, String column, Object value) {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
-            Root<T> entityRoot = criteriaQuery.from(entityType);
+    }
 
-            criteriaQuery.select(entityRoot).where(
-                    builder.and(builder.equal(entityRoot.get(column), value)));
+    protected CriteriaQuery<T> getIsDeletedCriteriaQuery(Session session, String column, Object value) {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(entityType);
+        Root<T> entityRoot = criteriaQuery.from(entityType);
 
-            log.info("search criteria query IsDeleted is created successfully");
-            return criteriaQuery;
-        }
+        criteriaQuery.select(entityRoot).where(
+                builder.and(builder.equal(entityRoot.get(column), value)));
+
+        log.info("search criteria query IsDeleted is created successfully");
+        return criteriaQuery;
+    }
+
 }

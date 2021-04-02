@@ -2,12 +2,12 @@ package com.mobiledocker.mobiledocker.entity.dto;
 
 
 
-import com.mobiledocker.mobiledocker.entity.Country;
+
 import com.mobiledocker.mobiledocker.entity.State;
 
 public class StateDto {
 	private Integer id;
-	private Country country;
+	
 	private int brandId;
 	private String name;
 	
@@ -18,8 +18,8 @@ public class StateDto {
 	public StateDto(State state) {
 		//super();
 		this.id = state.getId();
-		this.country=state.getCountry();
-		this.brandId=brandId;
+		
+		this.brandId=state.getBrandId();
 		this.name = state.getName();
 		
 	}
@@ -36,12 +36,7 @@ public class StateDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Country getCountry() {
-		return country;
-	}
-	public void setCountry(Country country) {
-		this.country = country;
-	}
+	
 	public int getBrandId() {
 		return brandId;
 	}
