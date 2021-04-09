@@ -14,13 +14,16 @@ public class City implements java.io.Serializable {
     private State state;
 
     private String name;
-
+    @Column(name = "isDeleted")
+    private boolean isDeleted = false;
     public City() {
+    	this.isDeleted=false;
     }
 
     public City(State state, String name) {
         this.state = state;
         this.name = name;
+        this.isDeleted=false;
     }
 
     @Id
@@ -52,6 +55,14 @@ public class City implements java.io.Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 }
 

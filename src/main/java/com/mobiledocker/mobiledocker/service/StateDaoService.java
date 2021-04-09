@@ -1,5 +1,6 @@
 package com.mobiledocker.mobiledocker.service;
 
+import com.google.gson.JsonElement;
 import com.mobiledocker.mobiledocker.entity.State;
 import com.mobiledocker.mobiledocker.entity.co.StateCo;
 import com.mobiledocker.mobiledocker.entity.co.StateEntity;
@@ -26,5 +27,11 @@ public interface StateDaoService {
 
     public StateDto UpdateSeries(StateCo stateCo);
 
-    public void updateFlag(int seriesId);
+    public void updateFlag(Long seriesId);
+
+	public boolean isExist(String modelName);
+
+	public List<StateDto> findAllByBrandId(String brandId);
+
+	public List<StateDto> findByBrandId(String brandId);
 }

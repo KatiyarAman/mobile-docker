@@ -14,7 +14,8 @@ public interface CountryServiceDao {
  public CountryDto Save(CountryCo cee);
  public CountryDto findByColum(int brand);
  public CountryDto updateBrand(CountryCo countryCo, String brandId);
- public void updateFlag(int brandId);
+ public void updateFlag(Long brandId);
  public List<CountryDto> SearchKeyword(String query);
+public boolean isExist(String brandName);
  
 }

@@ -1,23 +1,27 @@
 package com.mobiledocker.mobiledocker.serviceImpl;
 
+import com.mobiledocker.mobiledocker.entity.Country;
 import com.mobiledocker.mobiledocker.entity.Pagination;
 import com.mobiledocker.mobiledocker.entity.State;
 import com.mobiledocker.mobiledocker.entity.co.StateCo;
 import com.mobiledocker.mobiledocker.entity.co.StateEntity;
 import com.mobiledocker.mobiledocker.entity.dto.StateDto;
+import com.mobiledocker.mobiledocker.repository.CountryRepository;
 import com.mobiledocker.mobiledocker.repository.StateRepository;
 import com.mobiledocker.mobiledocker.service.StateDaoService;
 import com.mobiledocker.mobiledocker.util.ObjectBinder;
-import com.mobiledocker.mobiledocker.util.exception.DiscoveryException;
+import com.mobiledocker.mobiledocker.util.exception.*;
 import com.mobiledocker.mobiledocker.util.exception.EntityNotPersistException;
+import com.mobiledocker.mobiledocker.util.exception.NotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Service("stateDaoService")
 @Transactional
@@ -25,13 +29,16 @@ public class StateDaoServiceImpl implements StateDaoService {
 
     private static final Logger log = LoggerFactory.getLogger(StateDaoServiceImpl.class);
 
-    private List<State> listState = new ArrayList<State>();
+    
 
     private State State = new State();
 
     @Autowired
     private StateRepository stateDao;
-
+    
+    @Autowired
+    private CountryRepository countryDao;
+    
     @Autowired
     private ObjectBinder objectBinder;
 
@@ -44,8 +51,11 @@ public class StateDaoServiceImpl implements StateDaoService {
 
     @Override
     public StateDto save(StateCo stateCo) {
-        // TODO Auto-generated method stub
-        State = stateDao.save(stateCo);
+        
+    	Country country=countryDao.findByColumn("brandId",stateCo.getBrandId());
+    	if(country==null)
+    		throw new NotFoundException("Brand doesnot Exist by BrandId :"+stateCo.getBrandId());
+    	State = stateDao.save(stateCo,country);
         if (State == null)
             throw new EntityNotPersistException("Entity is not able to save due to some system error. Please try again");
         return objectBinder.bindState(State);
@@ -92,19 +102,35 @@ public class StateDaoServiceImpl implements StateDaoService {
     @Override
     public StateDto UpdateSeries(StateCo stateCo) {
         // TODO Auto-generated method stub
-        log.info("Updation Data for Series :" + stateCo.getId() + " " + stateCo.getBrandId() + " " + stateCo.getName());
-        State.setId(stateCo.getId());
-        State.setBrandId(stateCo.getBrandId());
-        State.setName(stateCo.getName());
+        log.info("Updation Data for Series :" + stateCo.getModelId() + " " + "" + " " + stateCo.getModelName());
+        State.setModelId(stateCo.getModelId());;
+        
         State updateState = stateDao.save(State);
         return objectBinder.bindState(updateState);
     }
 
     @Override
-    public void updateFlag(int seriesId) {
+    public void updateFlag(Long seriesId) {
         // TODO Auto-generated method stub
         stateDao.updateFlage(seriesId);
     }
+
+	@Override
+	public boolean isExist(String modelName) {
+		log.info("Duplication Checkinng while inserting Mmodel Name :"+modelName);
+		return stateDao.findByColumn("modelName", modelName)!=null;
+	}
+
+	@Override
+	public List<StateDto> findAllByBrandId(String brandId) {
+		return objectBinder.bindStates(stateDao.findAllByColumn("country",brandId));
+	}
+
+	@Override
+	public List<StateDto> findByBrandId(String brandId) {
+           Country country=countryDao.findByColumn("brandId", brandId);
+		return objectBinder.bindStates(stateDao.findAllByColumn("country",country));
+	}
 
 
 }

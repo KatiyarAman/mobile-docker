@@ -56,29 +56,17 @@ public class MobileWareHouseDaoImpl extends GenricRepositroyImpl<MobileWarehouse
     @Override
     public List<MobileWarehouse> findBybrandandModelSeries(String brand, String brandseries) {
         // TODO Auto-generated method stub
-        return super.findByColuAndId("brand", brand, "brandseries", brandseries);
+    	log.info("while integration few change had done ");
+        //return super.findByColuAndId("brand", brand, "brandseries", brandseries);
+    	return null;
     }
 
 
-    @Override
-    public List<MobileWarehouse> findByColumn(String warehouseId) {
-        // TODO Auto-generated method stub
-        return super.findAllByColumn("warehouseId", warehouseId);
-    }
+   
+    
 
 
-    @Override
-    public MobileWarehouse get(String warehouseId) {
-        // TODO Auto-generated method stub
-        return super.findByColumn("warehouseId", warehouseId);
-    }
-
-
-    @Override
-    public MobileWarehouse findByColumnn(String warehouseId) {
-        // TODO Auto-generated method stub
-        return super.findByColumnIsDeleted("warehouseId", warehouseId);
-    }
+    
 
 
     @Override

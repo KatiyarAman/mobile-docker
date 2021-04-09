@@ -41,18 +41,17 @@ public class MobileWarehouse implements java.io.Serializable {
     private String waterdiagnosis;
 
     private String standbyphone;
+    
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="FK_model_id",nullable=false)
+    private State state;
 
-    private String brandName;
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="FK_brand_id",nullable=false)
+    private Country country;
 
-    private String seriesName;
-
-    private String brand;
-
-    @Column(name = "brandseries")
-    private String brandseries;
-
-    @Column(name = "deleted")
-    private boolean deleted = false;
+    @Column(name = "isDeleted")
+    private boolean isDeleted = false;
 
     private String warehouseId;
 
@@ -72,17 +71,15 @@ public class MobileWarehouse implements java.io.Serializable {
 
     public MobileWarehouse() {
         this.warehouseId = generatewarehouseId();
-        this.deleted = false;
+        this.isDeleted = false;
     }
 
-    public MobileWarehouse(String touchandlcd, String touchscreenglass, String battery, String chargeport,
+    /*public MobileWarehouse(String touchandlcd, String touchscreenglass, String battery, String chargeport,
                            String loudspeaker, String earspeaker, String audiojack, String microphone, String network,
-                           String softwarediagnosis, String deadphonediagnosis, String waterdiagnosis, String standbyphone, String brand,
-                           String brandseries, boolean isDeleted, String warehouseId, Date dateCreated, Date lastModified,
-                           Date dateDeleted, String seriesName, String brandName) {
-        super();
-
-        this.touchandlcd = touchandlcd;
+                           String softwarediagnosis, String deadphonediagnosis, String waterdiagnosis, String standbyphone,
+                           Country country,State state ) { */
+                              
+       /* this.touchandlcd = touchandlcd;
         this.touchscreenglass = touchscreenglass;
         this.battery = battery;
         this.chargeport = chargeport;
@@ -95,19 +92,40 @@ public class MobileWarehouse implements java.io.Serializable {
         this.deadphonediagnosis = deadphonediagnosis;
         this.waterdiagnosis = waterdiagnosis;
         this.standbyphone = standbyphone;
-        this.brand = brand;
-        this.brandseries = brandseries;
-        this.deleted = false;
+        this.country = country;
+        this.state = state;
+        this.isDeleted = false;
         this.warehouseId = generatewarehouseId();
-        this.dateCreated = dateCreated;
-        this.lastModified = lastModified;
-        this.dateDeleted = dateDeleted;
-        this.seriesName = seriesName;
-        this.brandName = brandName;
-    }
+    }*/
 
 
-    private String generatewarehouseId() {
+   
+
+
+	public MobileWarehouse(String touchandlcd, String touchscreenglass, String battery, String chargeport,
+			String loudspeaker, String earspeaker, String audiojack, String microphone, String network,
+			String softwarediagnosis, String deadphonediagnosis, String waterdiagnosis, String standbyphone,
+			Country country, State state) {
+		this.touchandlcd = touchandlcd;
+        this.touchscreenglass = touchscreenglass;
+        this.battery = battery;
+        this.chargeport = chargeport;
+        this.loudspeaker = loudspeaker;
+        this.earspeaker = earspeaker;
+        this.audiojack = audiojack;
+        this.microphone = microphone;
+        this.network = network;
+        this.softwarediagnosis = softwarediagnosis;
+        this.deadphonediagnosis = deadphonediagnosis;
+        this.waterdiagnosis = waterdiagnosis;
+        this.standbyphone = standbyphone;
+        this.country = country;
+        this.state = state;
+        this.isDeleted = false;
+        this.warehouseId = generatewarehouseId();
+	}
+
+	private String generatewarehouseId() {
         /* return "C-" + new Date().getTime(); */
     	LocalDateTime current = LocalDateTime.now();
         current.plus(5, ChronoUnit.MILLIS);
@@ -226,28 +244,12 @@ public class MobileWarehouse implements java.io.Serializable {
         this.standbyphone = standbyphone;
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getBrandseries() {
-        return brandseries;
-    }
-
-    public void setBrandseries(String brandseries) {
-        this.brandseries = brandseries;
-    }
-
     public boolean isDeleted() {
-        return deleted;
+        return isDeleted;
     }
 
     public void setDeleted(boolean isDeleted) {
-        this.deleted = isDeleted;
+        this.isDeleted = isDeleted;
     }
 
     public String getWarehouseId() {
@@ -282,33 +284,19 @@ public class MobileWarehouse implements java.io.Serializable {
         this.dateDeleted = dateDeleted;
     }
 
-    public String getBrandName() {
-        return brandName;
-    }
+	public State getState() {
+		return state;
+	}
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
+	public Country getCountry() {
+		return country;
+	}
 
-    public String getSeriesName() {
-        return seriesName;
-    }
+	public void setState(State state) {
+		this.state = state;
+	}
 
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
-    }
-
-    @Override
-    public String toString() {
-        return "MobileWarehouse [id=" + id + ", touchandlcd=" + touchandlcd + ", touchscreenglass=" + touchscreenglass
-                + ", battery=" + battery + ", chargeport=" + chargeport + ", loudspeaker=" + loudspeaker
-                + ", earspeaker=" + earspeaker + ", audiojack=" + audiojack + ", microphone=" + microphone
-                + ", network=" + network + ", softwarediagnosis=" + softwarediagnosis + ", deadphonediagnosis="
-                + deadphonediagnosis + ", waterdiagnosis=" + waterdiagnosis + ", standbyphone=" + standbyphone
-                + ", brandName=" + brandName + ", seriesName=" + seriesName + ", brand=" + brand + ", brandseries="
-                + brandseries + ", isDeleted=" + deleted + ", warehouseId=" + warehouseId + ", dateCreated="
-                + dateCreated + ", lastModified=" + lastModified + ", dateDeleted=" + dateDeleted + "]";
-    }
-
-
+	public void setCountry(Country country) {
+		this.country = country;
+	}
 }

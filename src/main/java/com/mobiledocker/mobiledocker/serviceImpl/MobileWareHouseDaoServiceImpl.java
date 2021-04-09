@@ -1,13 +1,18 @@
 package com.mobiledocker.mobiledocker.serviceImpl;
 
+import com.mobiledocker.mobiledocker.entity.Country;
 import com.mobiledocker.mobiledocker.entity.MobileWarehouse;
+import com.mobiledocker.mobiledocker.entity.State;
 import com.mobiledocker.mobiledocker.entity.co.MobileWareHouseCo;
 import com.mobiledocker.mobiledocker.entity.dto.MobileWareHouseDto;
+import com.mobiledocker.mobiledocker.repository.CountryRepository;
 import com.mobiledocker.mobiledocker.repository.Mobilewarehouse;
+import com.mobiledocker.mobiledocker.repository.StateRepository;
 import com.mobiledocker.mobiledocker.service.MobileWareHouseDaoService;
 import com.mobiledocker.mobiledocker.util.ObjectBinder;
 import com.mobiledocker.mobiledocker.util.exception.CustomerNotFoundException;
 import com.mobiledocker.mobiledocker.util.exception.DiscoveryException;
+import com.mobiledocker.mobiledocker.util.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +45,12 @@ public class MobileWareHouseDaoServiceImpl implements MobileWareHouseDaoService 
 
     @Autowired
     private Mobilewarehouse mobilewarehouseDao;
+    
+    @Autowired
+    private CountryRepository countryDao;
+    
+    @Autowired
+    private StateRepository stateDao;
 
     @Override
     public List<MobileWareHouseDto> FindByBrandsAndModelNumber(String brand, String modelseries) {
@@ -66,27 +77,19 @@ public class MobileWareHouseDaoServiceImpl implements MobileWareHouseDaoService 
 
     @Override
     public MobileWareHouseDto Save(MobileWareHouseCo warehouseCo) {
-        System.out.println("get the name " + warehouseCo.getBrandseries());
-        // TODO Auto-generated method stub
-        mobilewareobj.setAudiojack(warehouseCo.getAudiojack());
-        mobilewareobj.setBattery(warehouseCo.getBattery());
-        mobilewareobj.setBrand(warehouseCo.getBrand());
-        mobilewareobj.setBrandseries(warehouseCo.getBrandseries());
-        mobilewareobj.setChargeport(warehouseCo.getChargeport());
-        mobilewareobj.setDeadphonediagnosis(warehouseCo.getDeadphonediagnosis());
-        mobilewareobj.setEarspeaker(warehouseCo.getEarspeaker());
-        mobilewareobj.setLoudspeaker(warehouseCo.getLoudspeaker());
-        mobilewareobj.setMicrophone(warehouseCo.getMicrophone());
-        mobilewareobj.setNetwork(warehouseCo.getNetwork());
-        mobilewareobj.setSoftwarediagnosis(warehouseCo.getSoftwarediagnosis());
-        mobilewareobj.setStandbyphone(warehouseCo.getStandbyphone());
-        mobilewareobj.setTouchandlcd(warehouseCo.getTouchandlcd());
-        mobilewareobj.setTouchscreenglass(warehouseCo.getTouchscreenglass());
-        mobilewareobj.setWaterdiagnosis(warehouseCo.getWaterdiagnosis());
-        mobilewareobj.setBrandName(warehouseCo.getBrandName());
-        mobilewareobj.setSeriesName(warehouseCo.getSeriesName());
-        log.info("while persisting Data :" + mobilewareobj.getWarehouseId());
-        MobileWarehouse warehousate = mobilewarehouseDao.Save(mobilewareobj);
+        Country country=countryDao.findByColumn("brandId",warehouseCo.getBrandId());
+        if(country==null)
+        	throw new NotFoundException("Brand does not exist by brandId "+warehouseCo.getBrandId());
+        State state=stateDao.findByColumn("modelId",warehouseCo.getModelId());
+        if(state==null)
+    	     throw new NotFoundException("Model does not exist by modelId "+warehouseCo.getModelId());
+
+    	     MobileWarehouse mobilewarehouse=new MobileWarehouse(warehouseCo.getTouchandlcd(),warehouseCo.getTouchscreenglass(),warehouseCo.getBattery(),
+    	    		 warehouseCo.getChargeport(),warehouseCo.getLoudspeaker(),warehouseCo.getEarspeaker(),warehouseCo.getAudiojack(),
+    	    		 warehouseCo.getMicrophone(),warehouseCo.getNetwork(),warehouseCo.getSoftwarediagnosis(),warehouseCo.getDeadphonediagnosis(),
+    	    		 warehouseCo.getWaterdiagnosis(),warehouseCo.getStandbyphone(),country,state);
+       
+        MobileWarehouse warehousate = mobilewarehouseDao.Save(mobilewarehouse);
         return objectBinder.bindWareHouse(warehousate);
     }
 
@@ -97,22 +100,21 @@ public class MobileWareHouseDaoServiceImpl implements MobileWareHouseDaoService 
     }
 
     @Override
-    public List<MobileWareHouseDto> findByColumn(String warehouseId) {
+    public List<MobileWareHouseDto> findAllByWarehouseId(String warehouseId) {
         // TODO Auto-generated method stub
-        return objectBinder.bindWareHouses(mobilewarehouseDao.findByColumn(warehouseId));
+        return objectBinder.bindWareHouses(mobilewarehouseDao.findAllByColumn("warehouseId",warehouseId));
     }
 
     @Override
     public MobileWareHouseDto updateProduct(MobileWareHouseCo warehouseCo, String warehouseId) {
         // TODO Auto-generated method stub
-        MobileWarehouse warehouse = mobilewarehouseDao.get(warehouseId);
+        MobileWarehouse warehouse = mobilewarehouseDao.findByColumn("warehouseId", warehouseId);
         if (warehouse == null)
             throw new CustomerNotFoundException("Entity not found by this warehouseId " + warehouseId);
         mobilewareobj.setId(warehouse.getId());
         mobilewareobj.setAudiojack(warehouseCo.getAudiojack());
         mobilewareobj.setBattery(warehouseCo.getBattery());
-        mobilewareobj.setBrand(warehouseCo.getBrand());
-        mobilewareobj.setBrandseries(warehouseCo.getBrandseries());
+      
         mobilewareobj.setChargeport(warehouseCo.getChargeport());
         mobilewareobj.setDeadphonediagnosis(warehouseCo.getDeadphonediagnosis());
         mobilewareobj.setEarspeaker(warehouseCo.getEarspeaker());
@@ -124,23 +126,21 @@ public class MobileWareHouseDaoServiceImpl implements MobileWareHouseDaoService 
         mobilewareobj.setTouchandlcd(warehouseCo.getTouchandlcd());
         mobilewareobj.setTouchscreenglass(warehouseCo.getTouchscreenglass());
         mobilewareobj.setWaterdiagnosis(warehouseCo.getWaterdiagnosis());
-        mobilewareobj.setBrandName(warehouseCo.getBrandName());
-        mobilewareobj.setSeriesName(warehouseCo.getSeriesName());
+      
         log.info("Update by Id :" + warehouse.getId());
         MobileWarehouse warehouseupdate = mobilewarehouseDao.save(mobilewareobj);
         return objectBinder.bindWareHouse(warehouseupdate);
     }
 
     @Override
-    public MobileWareHouseDto findByColum(String warehouseId) {
-        // TODO Auto-generated method stub
-        return objectBinder.bindWareHouse(mobilewarehouseDao.findByColumnn(warehouseId));
+    public MobileWareHouseDto findByWarehouseId(String warehouseId) {
+        return objectBinder.bindWareHouse(mobilewarehouseDao.findByColumn("warehouseId", warehouseId));
     }
 
     @Override
     public List<MobileWareHouseDto> SearchKeyword(String query) {
         // TODO Auto-generated method stub
-        return objectBinder.bindWareHouses(mobilewarehouseDao.findByBrandNameContaining(query));
+        return objectBinder.bindWareHouses(mobilewarehouseDao.findAll());
     }
 
 

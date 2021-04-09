@@ -7,7 +7,7 @@ import com.mobiledocker.mobiledocker.entity.State;
 
 public class CountryCo {
 	private String  brandId;
-	private String brandname;
+	private String brandName;
 	
 	public String getBrandId() {
 		return brandId;
@@ -15,13 +15,11 @@ public class CountryCo {
 	public void setBrandId(String brandId) {
 		this.brandId = brandId;
 	}
-	
-	public String getBrandname() {
-		return brandname;
+	public String getBrandName() {
+		return brandName;
 	}
-	public void setBrandname(String brandname) {
-		this.brandname = brandname;
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
-	
 	
 }

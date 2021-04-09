@@ -37,8 +37,8 @@ public class BookUser implements java.io.Serializable {
     @Size(min = 3, max = 10, message = "Name must be between 3-10 characters")
     private String fname;
 
-    @Column(name = "deleted")
-    private boolean deleted = false;
+    @Column(name = "isDeleted")
+    private boolean isDeleted = false;
 
     private String customerId;
 
@@ -58,7 +58,7 @@ public class BookUser implements java.io.Serializable {
 
     public BookUser() {
         this.customerId = generateCustomerId();
-        this.deleted = false;
+        this.isDeleted = false;
 
     }
 
@@ -88,7 +88,7 @@ public class BookUser implements java.io.Serializable {
         this.zipcode = zipcode;
         this.cityname = cityname;
         this.fname = fname;
-        this.deleted = false;
+        this.isDeleted = false;
         this.customerId = generateCustomerId();
         this.currentstatus = currentstatus;
     }
@@ -225,12 +225,12 @@ public class BookUser implements java.io.Serializable {
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return isDeleted;
     }
 
 
     public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+        this.isDeleted = deleted;
     }
 
     //comapartor

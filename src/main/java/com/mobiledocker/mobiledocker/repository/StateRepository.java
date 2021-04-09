@@ -8,5 +8,5 @@ import com.mobiledocker.mobiledocker.entity.State;
 
 public interface StateRepository extends  JpaRepository<State, Integer>,StateDao {
 
-	List<State> findByNameContaining(String query);
+	//List<State> findByNameContaining(String query);
 }

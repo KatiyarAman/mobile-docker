@@ -5,7 +5,7 @@ import java.util.List;
 import com.mobiledocker.mobiledocker.entity.Country;
 import com.mobiledocker.mobiledocker.entity.MobileWarehouse;
 
-public interface MobileWareHouseDao {
+public interface MobileWareHouseDao extends GenericRepository<MobileWarehouse> {
 	public MobileWarehouse Save(MobileWarehouse mobilewareobj);
 	
 	public List<MobileWarehouse> FindByBrandsAndModelNumber(String brand,String modelseries);
@@ -13,9 +13,9 @@ public interface MobileWareHouseDao {
 	public List<MobileWarehouse> findBybrandandModelSeries(String brand, String brandseries);
 
 	/* for udating to get id if exist */
-	public List<MobileWarehouse> findByColumn(String warehouseId);
+	/*public List<MobileWarehouse> findByColumn(String warehouseId);
 	public MobileWarehouse get(String warehouseId);
-	public MobileWarehouse findByColumnn(String warehouseId);
+	public MobileWarehouse findByColumnn(String warehouseId);*/
 	
 	
 }

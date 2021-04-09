@@ -14,10 +14,8 @@ public class MobileWareHouseCo {
 	private String deadphonediagnosis;
 	private String waterdiagnosis;
 	private String standbyphone;
-	private String brandName;
-	private String seriesName;
-	private String brand;
-	private String brandseries ;
+	private String brandId;
+	private String modelId ;
 	public String getTouchandlcd() {
 		return touchandlcd;
 	}
@@ -96,31 +94,17 @@ public class MobileWareHouseCo {
 	public void setStandbyphone(String standbyphone) {
 		this.standbyphone = standbyphone;
 	}
-	public String getBrandName() {
-		return brandName;
+	public String getBrandId() {
+		return brandId;
 	}
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
+	public String getModelId() {
+		return modelId;
 	}
-	public String getSeriesName() {
-		return seriesName;
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
 	}
-	public void setSeriesName(String seriesName) {
-		this.seriesName = seriesName;
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
 	}
-	public String getBrand() {
-		return brand;
-	}
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-	public String getBrandseries() {
-		return brandseries;
-	}
-	public void setBrandseries(String brandseries) {
-		this.brandseries = brandseries;
-	}
-	
-	
-	
+		
 }

@@ -27,8 +27,8 @@ public class User {
     private String userPassword;
     private String userId;
     private String userRole;
-    @Column(name="deleted")
-    private boolean deleted;
+    @Column(name = "isDeleted")
+    private boolean isDeleted = false;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false, nullable = false)
@@ -52,7 +52,7 @@ public class User {
      }
 
 	public User() {
-		this.deleted=false;
+		this.isDeleted=false;
 		this.userId=generateUserId();
 	}
 
@@ -65,7 +65,7 @@ public class User {
 		this.userCity=userCity;
 		this.userZipcode=userZipcode;
 		this.userRole=userRole;
-		this.deleted=false;
+		this.isDeleted=false;
 		this.userId=generateUserId();
 	}
 
@@ -101,11 +101,11 @@ public class User {
 	}
 
 	public boolean isDeleted() {
-		return deleted;
+		return isDeleted;
 	}
 
 	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+		this.isDeleted = deleted;
 	}
 
 	public Date getDateCreated() {

@@ -25,9 +25,9 @@ public interface MobileWareHouseDaoService {
 
     public List<MobileWareHouseDto> findAllWareHouse();
 
-    public List<MobileWareHouseDto> findByColumn(String warehouseId);
+    public List<MobileWareHouseDto> findAllByWarehouseId(String warehouseId);
 
-    public MobileWareHouseDto findByColum(String warehouseId);
+    public MobileWareHouseDto findByWarehouseId(String warehouseId);
 
     public MobileWareHouseDto updateProduct(MobileWareHouseCo warehouseCo, String warehouseId);
 

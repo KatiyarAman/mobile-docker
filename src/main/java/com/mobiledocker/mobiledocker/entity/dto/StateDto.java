@@ -3,45 +3,44 @@ package com.mobiledocker.mobiledocker.entity.dto;
 
 
 
+import com.mobiledocker.mobiledocker.entity.Country;
 import com.mobiledocker.mobiledocker.entity.State;
 
 public class StateDto {
-	private Integer id;
 	
-	private int brandId;
-	private String name;
-	
-	
+	private String modelId;
+	 private String modelName;
+	 private Country country;
+	 
 	public StateDto() {
-		super();
 	}
+	
 	public StateDto(State state) {
-		//super();
-		this.id = state.getId();
-		
-		this.brandId=state.getBrandId();
-		this.name = state.getName();
-		
+		this.modelId = state.getModelId();
+		this.modelName = state.getModelName();
+		this.country=state.getCountry();
 	}
-	public Integer getId() {
-		return id;
+	public String getModelId() {
+		return modelId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public String getModelName() {
+		return modelName;
+	}
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public int getBrandId() {
-		return brandId;
-	}
-	public void setBrandId(int brandId) {
-		this.brandId = brandId;
-	}
+
 	
 }

@@ -1,9 +1,8 @@
 package com.mobiledocker.mobiledocker.entity.dto;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mobiledocker.mobiledocker.entity.Country;
 import com.mobiledocker.mobiledocker.entity.MobileWarehouse;
+import com.mobiledocker.mobiledocker.entity.State;
 
 public class MobileWareHouseDto {
 	private String touchandlcd;
@@ -19,13 +18,11 @@ public class MobileWareHouseDto {
 	private String deadphonediagnosis;
 	private String waterdiagnosis;
 	private String standbyphone;
-	private String brandName;
-	private String seriesName;
-	private String brand;
-	private String brandseries ;
 	private String warehouseId;
-	@JsonProperty("registrationDate")
-    private Date dateCreated;
+	private Country country;
+	private State state ;
+	/*@JsonProperty("registrationDate")
+    private Date dateCreated;*/
 	public MobileWareHouseDto(MobileWarehouse wareHouse) {
 		this.touchandlcd = wareHouse.getTouchandlcd();
 		this.touchscreenglass = wareHouse.getTouchscreenglass();
@@ -40,10 +37,8 @@ public class MobileWareHouseDto {
 		this.deadphonediagnosis = wareHouse.getDeadphonediagnosis();
 		this.waterdiagnosis = wareHouse.getWaterdiagnosis();
 		this.standbyphone = wareHouse.getStandbyphone();
-		this.brandName = wareHouse.getBrandName();
-		this.seriesName = wareHouse.getSeriesName();
-		this.brand = wareHouse.getBrand();
-		this.brandseries = wareHouse.getBrandseries();
+		this.country=wareHouse.getCountry();
+		this.state=wareHouse.getState();
 		this.warehouseId=wareHouse.getWarehouseId();
 	}
 	
@@ -129,18 +124,6 @@ public class MobileWareHouseDto {
 	public void setStandbyphone(String standbyphone) {
 		this.standbyphone = standbyphone;
 	}
-	public String getBrandName() {
-		return brandName;
-	}
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
-	}
-	public String getSeriesName() {
-		return seriesName;
-	}
-	public void setSeriesName(String seriesName) {
-		this.seriesName = seriesName;
-	}
 	
 	public String getWarehouseId() {
 		return warehouseId;
@@ -149,27 +132,28 @@ public class MobileWareHouseDto {
 		this.warehouseId = warehouseId;
 	}
 
-	public Date getDateCreated() {
+	/*public Date getDateCreated() {
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}*/
+
+	public Country getCountry() {
+		return country;
 	}
 
-	public String getBrand() {
-		return brand;
+	public State getState() {
+		return state;
 	}
 
-	public void setBrand(String brand) {
-		this.brand = brand;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
-	public String getBrandseries() {
-		return brandseries;
+	public void setState(State state) {
+		this.state = state;
 	}
 
-	public void setBrandseries(String brandseries) {
-		this.brandseries = brandseries;
-	}
 }

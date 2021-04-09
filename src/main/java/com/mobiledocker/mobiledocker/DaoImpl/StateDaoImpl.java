@@ -2,7 +2,6 @@ package com.mobiledocker.mobiledocker.DaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,7 +12,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.Transformers;
-import org.hibernate.type.StandardBasicTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -27,13 +25,11 @@ import com.mobiledocker.mobiledocker.entity.Pagination;
 import com.mobiledocker.mobiledocker.entity.State;
 import com.mobiledocker.mobiledocker.entity.co.StateCo;
 import com.mobiledocker.mobiledocker.entity.co.StateEntity;
-import com.mobiledocker.mobiledocker.entity.dto.StateDto;
 
 @Repository
 public class StateDaoImpl extends GenricRepositroyImpl<State> implements StateDao, InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(StateDaoImpl.class);
 
-    private State state = new State();
 
     @Override
     public List<State> FindByCountry(int countryId) {
@@ -63,10 +59,8 @@ public class StateDaoImpl extends GenricRepositroyImpl<State> implements StateDa
     }
 
     @Override
-    public State save(StateCo stateCo) {
-        // TODO Auto-generated method stub
-        state.setName(stateCo.getName());
-        state.setBrandId(stateCo.getBrandId());
+    public State save(StateCo stateCo,Country country) {
+                State state=new State(stateCo.getModelName(),country);
         return super.save(state);
     }
 
@@ -202,7 +196,7 @@ public class StateDaoImpl extends GenricRepositroyImpl<State> implements StateDa
     }
 
     @Override
-    public void updateFlage(int seriesId) {
+    public void updateFlage(Long seriesId) {
         // TODO Auto-generated method stub
         super.setDeleted(seriesId);
     }

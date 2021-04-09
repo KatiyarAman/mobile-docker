@@ -23,9 +23,7 @@ import javax.persistence.criteria.Root;
 public class CountryDaoImpl extends GenricRepositroyImpl<Country> implements CountryDao, InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(CountryDaoImpl.class);
 
-    private Country country = new Country();
-
-    @Override
+    /*@Override
     public List<Country> findAll() {
         List<Country> countries = null;
         log.info("Country Dao impl +");
@@ -48,9 +46,9 @@ public class CountryDaoImpl extends GenricRepositroyImpl<Country> implements Cou
         }
 
         return countries;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Country findById(int id) {
         // TODO Auto-generated method stub
         Country country = null;
@@ -73,7 +71,7 @@ public class CountryDaoImpl extends GenricRepositroyImpl<Country> implements Cou
             session.close();
         }
         return country;
-    }
+    }*/
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -83,16 +81,14 @@ public class CountryDaoImpl extends GenricRepositroyImpl<Country> implements Cou
 
     @Override
     public Country Save(CountryCo countryCo) {
-        // TODO Auto-generated method stub
-        System.out.println(countryCo.getBrandname());
-        country.setName(countryCo.getBrandname());
+        Country country=new Country(countryCo.getBrandName());
         return super.save(country);
     }
 
     @Override
     public Country findByColum(int brand) {
         // TODO Auto-generated method stub
-        return super.findByColumnIsDeleted("id", brand);
+        return super.findByColumn("id", brand);
     }
 
     @Override
@@ -102,14 +98,14 @@ public class CountryDaoImpl extends GenricRepositroyImpl<Country> implements Cou
         return super.list();
     }
 
-    @Override
+    /*@Override
     public Country findByColumn(String brandId) {
         // TODO Auto-generated method stub
 
 
         return super.findByColumn("id", brandId);
 
-    }
+    }*/
     @Override
 	public List<Country> fetchSearch(Pagination pagination, String category) {
 		List<Country> countryList=new ArrayList<>();
@@ -148,8 +144,8 @@ return cq;
 	}
 
 	@Override
-    public void updateFlag(int brandId) {
+    public void updateFlag(Long id) {
 
-        super.setDeleted(brandId);
+        super.setDeleted(id);
     }
 }

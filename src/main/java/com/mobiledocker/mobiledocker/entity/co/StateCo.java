@@ -3,27 +3,26 @@ package com.mobiledocker.mobiledocker.entity.co;
 import com.mobiledocker.mobiledocker.entity.Country;
 
 public class StateCo {
-	private Integer id;
-	private int brandId;
+	private String modelId;
+	 private String modelName;
+	 private String brandId;
+	public String getModelId() {
+		return modelId;
+	}
+	public String getModelName() {
+		return modelName;
+	}
 	
-	private String name;
-	public Integer getId() {
-		return id;
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getBrandId() {
+	public String getBrandId() {
 		return brandId;
 	}
-	public void setBrandId(int brandId) {
+	public void setBrandId(String brandId) {
 		this.brandId = brandId;
 	}
 	

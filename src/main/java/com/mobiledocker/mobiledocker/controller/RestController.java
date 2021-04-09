@@ -1,5 +1,6 @@
 package com.mobiledocker.mobiledocker.controller;
 
+/*while integrationg with angular ,updatFlag() change int-->to -->Long */
 
 import com.mobiledocker.mobiledocker.entity.co.BookUserCo;
 import com.mobiledocker.mobiledocker.entity.co.CountryCo;
@@ -47,7 +48,7 @@ public class RestController {
     public ResponseEntity<MobileWareHouseDto> editUser(@PathVariable("warehouseId") String warehouseId, HttpServletRequest request) {
         log.info("Warehouse ID :" + warehouseId);
         try {
-            return new ResponseEntity<MobileWareHouseDto>(daoService.findByColum(warehouseId), HttpStatus.OK);
+            return new ResponseEntity<MobileWareHouseDto>(daoService.findByWarehouseId(warehouseId), HttpStatus.OK);
         } catch (Exception e) {
             // TODO: handle exception
             return new ResponseEntity<MobileWareHouseDto>(HttpStatus.BAD_REQUEST);
@@ -63,8 +64,8 @@ public class RestController {
         log.info("brand " + brand + " " + brandSeries + " " + warehouseId + " " + seriesName + " " + brandName);
         if (bindingResult.hasErrors())
             throw new BadRequestException("Bad Request. Params Missing");
-        warehouseCo.setBrandseries(brandSeries);
-        return daoService.updateProduct(warehouseCo, warehouseId);
+/*        warehouseCo.setBrandseries(brandSeries);
+*/        return daoService.updateProduct(warehouseCo, warehouseId);
     }
 
     /* status update ---for client */
@@ -109,16 +110,16 @@ public class RestController {
     @RequestMapping(value = "/updateBrand", method = RequestMethod.POST)
     public CountryDto updateBrands(@RequestParam("brandId") String brandId, @RequestParam("brandname") String brandname,
                                    @ModelAttribute CountryCo countryCo, BindingResult bindingResult) {
-        countryCo.setBrandname(brandname);
+        countryCo.setBrandName(brandname);
         countryCo.setBrandId(brandId);
         if (bindingResult.hasErrors())
             throw new BadRequestException("Bad Request. Params Missing");
-        log.info("Update brands name :" + countryCo.getBrandname() + " " + countryCo.getBrandId());
+        log.info("Update brands name :" + countryCo.getBrandName() + " " + countryCo.getBrandId());
         return brandService.updateBrand(countryCo, brandId);
     }
 
     @RequestMapping(value = "/branddelete-user/{BrandId}", method = RequestMethod.POST)
-    public ResponseEntity<Void> branddeleteById(@PathVariable("BrandId") int brandId, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Void> branddeleteById(@PathVariable("BrandId") Long brandId, HttpServletRequest request) throws IOException {
         try {
             log.info("Set Flag True : " + brandId);
             this.brandService.updateFlag(brandId);
@@ -145,12 +146,12 @@ public class RestController {
 
     @RequestMapping(value = "/updateSeries", method = RequestMethod.POST)
     public ResponseEntity<StateDto> updateSeries(@RequestParam("seriesname") String seriesname, @RequestParam("brandId") int brandId,
-                                                 @RequestParam("seriesId") int seriesId, @ModelAttribute StateCo stateCo, BindingResult bindingResult) {
+                                                 @RequestParam("seriesId") String seriesId, @ModelAttribute StateCo stateCo, BindingResult bindingResult) {
         log.info("Updating Start BradSeries by admin:" + seriesname + " " + brandId + " " + seriesId);
         if (bindingResult.hasErrors())
             throw new BadRequestException("Bad Request. Params Missing");
-        stateCo.setName(seriesname);
-        stateCo.setId(seriesId);
+        stateCo.setModelName(seriesname);
+        stateCo.setModelId(seriesId);
         try {
             StateDto stateDto = this.seriesService.UpdateSeries(stateCo);
             return ResponseEntity.ok().body(stateDto);
@@ -162,7 +163,7 @@ public class RestController {
     }
 
     @RequestMapping(value = "/seriesdeleteuser/{seriesId}", method = RequestMethod.POST)
-    public ResponseEntity<Void> seriesDelete(@PathVariable("seriesId") int seriesId, HttpServletRequest request) {
+    public ResponseEntity<Void> seriesDelete(@PathVariable("seriesId") Long seriesId, HttpServletRequest request) {
         try {
             log.info("Series Delete By SeriesId :" + seriesId);
             this.seriesService.updateFlag(seriesId);

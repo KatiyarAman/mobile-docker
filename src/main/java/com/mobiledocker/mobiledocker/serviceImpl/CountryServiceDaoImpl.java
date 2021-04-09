@@ -60,7 +60,7 @@ public class CountryServiceDaoImpl implements CountryServiceDao {
     public CountryDto findByColum(int brand) {
         // TODO Auto-generated method stub
         country = countryDao.findByColum(brand);
-        System.out.println(country.getName());
+        System.out.println(country.getBrandName());
         return objectBinder.bindCountry(country);
     }
 
@@ -73,7 +73,7 @@ public class CountryServiceDaoImpl implements CountryServiceDao {
     @Override
     public CountryDto findByColumn(String brandId) {
         // TODO Auto-generated method stub
-        country = countryDao.findByColumn(brandId);
+        country = countryDao.findByColumn("brandId",brandId);
         log.debug("Find by BrandId For Updating Brand :" + country);
         if (country == null)
             throw new DiscoveryException("Requested resource can not be process due service connection problem. Please try again.");
@@ -82,18 +82,18 @@ public class CountryServiceDaoImpl implements CountryServiceDao {
 
     @Override
     public CountryDto updateBrand(CountryCo countryCo, String brandId) {
-        country = countryDao.findByColumn(brandId);
+        country = countryDao.findByColumn("brandId",brandId);
         if (country == null)
             throw new CustomerNotFoundException("Entity not found by this brandId " + brandId);
         country.setId(country.getId());
-        country.setName(countryCo.getBrandname());
-        log.info("Update Insertion :" + country.getName() + " " + country.getId());
+        country.setBrandName(countryCo.getBrandName());
+        log.info("Update Insertion :" + country.getBrandName() + " " + country.getId());
         Country updatecountry = countryDao.save(country);
         return objectBinder.bindCountry(updatecountry);
     }
 
     @Override
-    public void updateFlag(int brandId) {
+    public void updateFlag(Long brandId) {
         // TODO Auto-generated method stub
         countryDao.updateFlag(brandId);
     }
@@ -106,6 +106,11 @@ public class CountryServiceDaoImpl implements CountryServiceDao {
             throw new DiscoveryException("Requested resource can not be process due service connection problem. Please try again.");
         return objectBinder.bindCountries(countryList);
     }
+
+	@Override
+	public boolean isExist(String brandName) {
+		return countryDao.findByColumn("brandName",brandName)!=null;
+	}
 
 
 }

@@ -8,7 +8,7 @@ import com.mobiledocker.mobiledocker.service.MobileWareHouseDaoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Properties;
 
 
-@Controller
+@RestController
 @RequestMapping
 public class GoForItController {
 
@@ -34,17 +34,11 @@ public class GoForItController {
 
     Properties properties = appProperties.getPropValues();
 
-    private List<MobileWarehouse> mobileDetails = new ArrayList<MobileWarehouse>();
-
-    private MobileWarehouse mobileware = new MobileWarehouse();
-
-    private Object loginBean = new MobileWarehouse();
-
     @Autowired
     private MobileWareHouseDaoService daoService;
 
 
-    @RequestMapping(value = "/myFunctionn", method = {RequestMethod.GET, RequestMethod.POST})
+   /* @RequestMapping(value = "/myFunctionn", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView GoForIt(Model model, @RequestParam("comboboxCountry") String brandId, @ModelAttribute("loginBean") MobileWarehouse loginbean
             , @RequestParam("comboboxState") String brandseries
             , HttpServletRequest request, HttpServletResponse response,
@@ -61,7 +55,7 @@ public class GoForItController {
         request.setAttribute("mode", "ALL_USERS");
         return mv;
 
-    }
+    }*/
 
     @RequestMapping(value = "/save-new", method = {RequestMethod.POST, RequestMethod.GET})
     public String SaveNewData() {
