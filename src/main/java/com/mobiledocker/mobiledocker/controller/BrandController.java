@@ -10,6 +10,7 @@ import com.mobiledocker.mobiledocker.entity.co.CountryCo;
 import com.mobiledocker.mobiledocker.entity.co.StateCo;
 import com.mobiledocker.mobiledocker.entity.co.UserCo;
 import com.mobiledocker.mobiledocker.entity.dto.BookUserDto;
+import com.mobiledocker.mobiledocker.entity.dto.CountryDto;
 import com.mobiledocker.mobiledocker.entity.dto.MobileWareHouseDto;
 import com.mobiledocker.mobiledocker.entity.dto.StateDto;
 import com.mobiledocker.mobiledocker.entity.dto.UserDto;
@@ -40,9 +41,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/admin")
-public class HomeController {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(HomeController.class);
+@RequestMapping(value="/brand")
+public class BrandController {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(BrandController.class);
 
     private Country country = new Country();
 
@@ -67,40 +68,46 @@ public class HomeController {
     	return bookUserService.findbySortedCustomerId();
     }
 
-    @RequestMapping(value = "/form_component", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json", produces = "application/json")
+    /*@RequestMapping(value = "/form_component", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json", produces = "application/json")
     public List<com.mobiledocker.mobiledocker.entity.dto.CountryDto> getForms(ModelMap modelMap) {
         //modelMap.put("countries", countryServiceDao.findGenricAll());
 
-        /*for the same page
+        for the same page
          * List<MobileWareHouseDto> mobileDetailsList=null;
          * mobileDetailsList=daoService.findAllWareHouse();
          * modelMap.put("users",mobileDetailsList); modelMap.put("mode","ALL_USERS");
-         */
+         
         //modelMap.put("series", stateService.findAll());
         return countryServiceDao.findGenricAll();
 
-    }
+    }*/
 
-    @RequestMapping(value = "/addBrand", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json", produces = "application/json")
+    /*@RequestMapping(value = "/addBrand", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json", produces = "application/json")
     public com.mobiledocker.mobiledocker.entity.dto.CountryDto CountryDto(@RequestParam("brand") String selectbrand, @ModelAttribute CountryCo co, BindingResult bindingResult) {
         log.info("Home controller Add Brand  :" + selectbrand);
         CountryCo obj = new CountryCo();
         obj.setBrandname(selectbrand);
         return countryServiceDao.Save(obj);
+    }*/
+    
+    @RequestMapping(value = "", method = {RequestMethod.POST})
+    public com.mobiledocker.mobiledocker.entity.dto.CountryDto CountryDto(@RequestBody CountryCo co, BindingResult bindingResult) {
+        log.info("Home controller Add Brand  :" + co.getBrandName());
+        if(bindingResult.hasErrors())
+        	throw new BadRequestException("Bad Request Param Missing");
+        if(countryServiceDao.isExist(co.getBrandName()))
+        	throw new DuplicateRecordException("BrandName Already Exist");
+        return countryServiceDao.Save(co);
     }
-
-    @RequestMapping(value = "/addNewModal", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json", produces = "application/json")
-    public StateDto addNewModal(@RequestParam("brandId") int brandId, @RequestParam("idModel") String idModel,
-                                @ModelAttribute StateCo stateCo, BindingResult bindingResult) {
-        log.info("DemoController countries" + brandId + " " + idModel);
-        if (bindingResult.hasErrors())
-            throw new BadRequestException("Bad Request. Params Missing");
-        StateCo obj = new StateCo();
-        obj.setName(idModel);
-        obj.setBrandId(brandId);
-        return stateService.save(obj);
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<CountryDto> index() {
+        log.info("HomeController countries");
+        /*modelMap.addAttribute("formData", new BookUser());
+        modelMap.put("countries", countryServiceDao.findGenricAll());
+        return "index";*/
+        return countryServiceDao.findGenricAll();
     }
-
+ 
     @RequestMapping(value = "/basic_table", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json", produces = "application/json")
     public List<MobileWareHouseDto> getTable(HttpServletRequest request, HttpServletResponse response) {
         /*ModelAndView mv = new ModelAndView("basic_table");
